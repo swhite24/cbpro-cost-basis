@@ -1,0 +1,38 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - binary: '{{ .ProjectName }}_{{ .Tag }}'
+    flags:
+        - -trimpath
+    env:
+      - CGO_ENABLED=0
+    goarch:
+      - '386'
+      - amd64
+      - arm
+      - arm64
+    goos:
+      - linux
+      - windows
+      - darwin
+    ignore:
+      - goarch: '386'
+        goos: darwin
+    mod_timestamp: '{{ .CommitTimestamp }}'
+# archives:
+#   - replacements:
+#       darwin: Darwin
+#       linux: Linux
+#       windows: Windows
+#       386: i386
+#       amd64: x86_64
+checksum:
+  name_template: '{{ .ProjectName }}_{{ .Tag }}_SHA256SUMS'
+  algorithm: sha256
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

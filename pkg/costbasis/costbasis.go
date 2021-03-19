@@ -75,6 +75,9 @@ pagination:
 			return nil, err
 		}
 		for _, f := range page {
+			if f.Side != "buy" {
+				continue
+			}
 			if start.Before(f.CreatedAt.Time()) {
 				fills = append(fills, f)
 			} else {

@@ -28,7 +28,7 @@ func Calculate(cfg *config.Config) (*Info, error) {
 	var fills []coinbasepro.Fill
 	var totalCost, totalPurchase float64
 	initiateClient(cfg)
-	if fills, err = getFillsFromDate(cfg.StartDate, cfg.Product); err != nil {
+	if fills, err = getFillsFromDate(cfg.StartDate, cfg.EndDate, cfg.Product); err != nil {
 		return nil, err
 	}
 
@@ -62,7 +62,7 @@ func Calculate(cfg *config.Config) (*Info, error) {
 	}, nil
 }
 
-func getFillsFromDate(start time.Time, product string) ([]coinbasepro.Fill, error) {
+func getFillsFromDate(start, end time.Time, product string) ([]coinbasepro.Fill, error) {
 	fills := []coinbasepro.Fill{}
 	cursor := client.ListFills(coinbasepro.ListFillsParams{
 		ProductID: product,
@@ -75,7 +75,7 @@ pagination:
 			return nil, err
 		}
 		for _, f := range page {
-			if f.Side != "buy" {
+			if f.Side != "buy" || end.Before(f.CreatedAt.Time()) {
 				continue
 			}
 			if start.Before(f.CreatedAt.Time()) {

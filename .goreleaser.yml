@@ -2,7 +2,8 @@ before:
   hooks:
     - go mod download
 builds:
-  - binary: '{{ .ProjectName }}_{{ .Tag }}'
+  - dir: cmd/cbpro-cost-basis
+    binary: '{{ .ProjectName }}_{{ .Tag }}'
     flags:
         - -trimpath
     env:
@@ -20,13 +21,6 @@ builds:
       - goarch: '386'
         goos: darwin
     mod_timestamp: '{{ .CommitTimestamp }}'
-# archives:
-#   - replacements:
-#       darwin: Darwin
-#       linux: Linux
-#       windows: Windows
-#       386: i386
-#       amd64: x86_64
 checksum:
   name_template: '{{ .ProjectName }}_{{ .Tag }}_SHA256SUMS'
   algorithm: sha256

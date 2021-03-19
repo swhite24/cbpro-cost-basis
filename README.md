@@ -10,9 +10,7 @@
 
 ## Installation
 
-```sh
-go get github.com/swhite24/cbpro-cost-basis/cmd/cbpro-cost-basis
-```
+Check the [releases](releases) page and grab the binary appropriate for your system.
 
 ## Features
 

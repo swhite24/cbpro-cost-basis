@@ -34,6 +34,20 @@ Flags:
       --start string        Start date of order fills to calculate cost basis. (2021-01-01)
 ```
 
+## Example
+
+```sh
+$ cbpro-cost-basis --start 2021-01-01
+
+Product: BTC-USD
+Start Date: 2019-01-01
+End Date: 2020-01-01
+Total Amount Purchased: x.xxxxxxxx
+Total Cost: xxx.xx
+Cost Basis: xxx.xx
+
+```
+
 ## License
 
 See [LICENSE.txt](LICENSE.txt)

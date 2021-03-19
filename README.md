@@ -10,7 +10,7 @@
 
 ## Installation
 
-Check the [releases](releases) page and grab the binary appropriate for your system.
+Check the [releases](https://github.com/swhite24/cbpro-cost-basis/releases) page and grab the binary appropriate for your system.
 
 ## Features
 

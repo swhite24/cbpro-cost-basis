@@ -21,14 +21,11 @@ type (
 	}
 )
 
-var client *coinbasepro.Client
-
-func Calculate(cfg *config.Config) (*Info, error) {
+func Calculate(client *coinbasepro.Client, cfg *config.Config) (*Info, error) {
 	var err error
 	var fills []coinbasepro.Fill
 	var totalCost, totalPurchase float64
-	initiateClient(cfg)
-	if fills, err = getFillsFromDate(cfg.StartDate, cfg.EndDate, cfg.Product); err != nil {
+	if fills, err = getFillsFromDate(client, cfg.StartDate, cfg.EndDate, cfg.Product); err != nil {
 		return nil, err
 	}
 
@@ -62,7 +59,7 @@ func Calculate(cfg *config.Config) (*Info, error) {
 	}, nil
 }
 
-func getFillsFromDate(start, end time.Time, product string) ([]coinbasepro.Fill, error) {
+func getFillsFromDate(client *coinbasepro.Client, start, end time.Time, product string) ([]coinbasepro.Fill, error) {
 	fills := []coinbasepro.Fill{}
 	cursor := client.ListFills(coinbasepro.ListFillsParams{
 		ProductID: product,
@@ -87,14 +84,4 @@ pagination:
 	}
 
 	return fills, nil
-}
-
-func initiateClient(cfg *config.Config) {
-	client = coinbasepro.NewClient()
-	client.UpdateConfig(&coinbasepro.ClientConfig{
-		BaseURL:    cfg.BaseURL,
-		Key:        cfg.Key,
-		Passphrase: cfg.Passphrase,
-		Secret:     cfg.Secret,
-	})
 }

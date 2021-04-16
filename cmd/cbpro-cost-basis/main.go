@@ -6,6 +6,7 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/preichenberger/go-coinbasepro/v2"
 	"github.com/spf13/cobra"
 	"github.com/swhite24/cbpro-cost-basis/pkg/config"
 	"github.com/swhite24/cbpro-cost-basis/pkg/costbasis"
@@ -40,7 +41,7 @@ Cost Basis: {{ .AverageCost }}
 				os.Exit(1)
 			}
 
-			info, err := costbasis.Calculate(c)
+			info, err := costbasis.Calculate(initiateClient(c), c)
 			if err != nil {
 				fmt.Println("failed to calculate cost basis")
 				fmt.Println(err)
@@ -63,4 +64,15 @@ Cost Basis: {{ .AverageCost }}
 
 func main() {
 	rootCmd.Execute()
+}
+
+func initiateClient(cfg *config.Config) *coinbasepro.Client {
+	client := coinbasepro.NewClient()
+	client.UpdateConfig(&coinbasepro.ClientConfig{
+		BaseURL:    cfg.BaseURL,
+		Key:        cfg.Key,
+		Passphrase: cfg.Passphrase,
+		Secret:     cfg.Secret,
+	})
+	return client
 }

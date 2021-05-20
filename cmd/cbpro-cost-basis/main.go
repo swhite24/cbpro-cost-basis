@@ -27,6 +27,7 @@ End Date: {{ .End }}
 Total Amount Purchased: {{ .ProductPurchased }}
 Total Cost: {{ .TotalCost }}
 Cost Basis: {{ .AverageCost }}
+# of Buys: {{ .BuyCount }}
 `)
 	rootCmd = &cobra.Command{
 		Use:   "cbpro-cost-basis",

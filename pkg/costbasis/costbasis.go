@@ -18,6 +18,7 @@ type (
 		ProductPurchased string
 		TotalCost        string
 		AverageCost      string
+		BuyCount         int
 	}
 )
 
@@ -56,6 +57,7 @@ func Calculate(client *coinbasepro.Client, cfg *config.Config) (*Info, error) {
 		ProductPurchased: fmt.Sprintf("%.8f", totalPurchase),
 		TotalCost:        fmt.Sprintf("%.2f", totalCost),
 		AverageCost:      fmt.Sprintf("%.2f", totalCost/totalPurchase),
+		BuyCount:         len(fills),
 	}, nil
 }
 
